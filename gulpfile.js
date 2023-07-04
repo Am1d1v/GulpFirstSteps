@@ -1,9 +1,12 @@
 
 
 
-function defaultTask(cb) {
-    // place code for your default task here
-    cb();
-  }
-  
-  exports.default = defaultTask
+const gulp = require('gulp');
+const sass = require('sass');
+const del = require('del');
+
+function clean(){
+  return del(['dist'])
+}
+
+exports.clean = clean
