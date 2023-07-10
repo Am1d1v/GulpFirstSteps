@@ -1,9 +1,12 @@
 
 
 
-const gulp = import('gulp');
-const sass = import('gulp-sass');
-const del = import('del');
+const gulp = import('gulp')
+const sass = import('gulp-sass')
+const del = import('del')
+const babel = import('gulp-babel')
+const uglify = import('gulp-uglify')
+const concat = import('gulp-concat')
 
 const paths = {
     styles: {
@@ -19,6 +22,8 @@ const paths = {
 function scripts() {
   return gulp.src(paths.scripts.src)
     .pipe(babel())
+    .pipe(uglify())
+    .pipe(concat())
 }
 
 function clean(){
@@ -28,7 +33,7 @@ function clean(){
 
 function styles(){
   return gulp.src(paths.styles.src)
-    .pipe(gulp-sass())
+    .pipe(sass())
     .pipe(gulp.dest(paths.styles.dest))
 }
 
