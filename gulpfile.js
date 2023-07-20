@@ -1,41 +1,28 @@
+const {src, dest, watch} = require('gulp');
 
+const sass = require('gulp-sass')(require('sass'));
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify-es').default
 
-
-const gulp = import('gulp')
-const sass = import('gulp-sass')
-const del = import('del')
-const babel = import('gulp-babel')
-const uglify = import('gulp-uglify')
-const concat = import('gulp-concat')
-
-const paths = {
-    styles: {
-      src: 'src/styles/*.sass',
-      dest: 'dist/sass/'
-    },
-    scripts: {
-      src: 'src/scripts/*.js',
-      dest: 'dist/js/'
-    }
+function watching(){
+    watch(['app/css/style.min.css'], styles)
+    watch(['app/js/main.js'], scripts)
 }
 
-function scripts() {
-  return gulp.src(paths.scripts.src)
-    .pipe(babel())
+function scripts(){
+    return src('app/js/main.js')
+    .pipe(concat('main.min.js'))
     .pipe(uglify())
-    .pipe(concat())
+    .pipe(dest('app/js'))
 }
-
-function clean(){
-  return del(['dist'])
-}
-
 
 function styles(){
-  return gulp.src(paths.styles.src)
-    .pipe(sass())
-    .pipe(gulp.dest(paths.styles.dest))
+    return src('app/style/style.css')
+    .pipe(concat('style.min.css'))
+    .pipe(sass({ outputStyle: 'compressed'}))
+    .pipe(dest('app/css'))
 }
 
-exports.clean = clean
-exports.styles = styles
+exports.styles = styles;
+exports.scripts = scripts;
+exports.watching = watching;

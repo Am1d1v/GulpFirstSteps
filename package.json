@@ -1,7 +1,7 @@
 {
-  "name": "gulpfirststeps",
+  "name": "gulppractice",
   "version": "1.0.0",
-  "description": "Gulp test",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,12 +9,10 @@
   "author": "Dima",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.22.8",
-    "del": "^7.0.0",
     "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^5.1.0",
-    "gulp-uglify": "^3.0.2"
+    "gulp-uglify-es": "^3.0.0",
+    "sass": "^1.64.0"
   }
 }
