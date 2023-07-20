@@ -1,28 +1,40 @@
-const {src, dest, watch} = require('gulp');
 
+
+const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
-const concat = require('gulp-concat');
-const uglify = require('gulp-uglify-es').default
+const rename = require('gulp-rename');
+const cleanCss = require('gulp-clean-css');
+const build = gulp.series(styles, watch);
 
-function watching(){
-    watch(['app/css/style.min.css'], styles)
-    watch(['app/js/main.js'], scripts)
-}
-
-function scripts(){
-    return src('app/js/main.js')
-    .pipe(concat('main.min.js'))
-    .pipe(uglify())
-    .pipe(dest('app/js'))
+const paths = {
+    styles: {
+        src: 'src/style/style.css',
+        dest: 'dist/css/'
+    },
+    scripts: {
+        src: 'src/scripts/main.js',
+        dest: 'dist/js/'
+    }
 }
 
 function styles(){
-    return src('app/style/style.css')
-    .pipe(concat('style.min.css'))
-    .pipe(sass({ outputStyle: 'compressed'}))
-    .pipe(dest('app/css'))
+    return gulp.src(paths.styles.src)
+    .pipe(sass())
+    .pipe(cleanCss())
+    .pipe(rename({
+        basename: 'style',
+        suffix: '.min'
+    }))
+    .pipe(gulp.dest(paths.styles.dest))
 }
 
+function watch(){
+    gulp.watch(paths.styles.src, styles)
+}
+
+
+
 exports.styles = styles;
-exports.scripts = scripts;
-exports.watching = watching;
+exports.watch = watch;
+exports.build = build;
+exports.default = build;
